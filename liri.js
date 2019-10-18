@@ -26,7 +26,9 @@ var spotifyAPi = () => {
             if (err) throw err;
             fs.appendFile(
               fd,
-              JSON.stringify(subinquiry + response, null, 2),
+              JSON.stringify(subinquiry, null, 2) +
+                "\n" +
+                JSON.stringify(response, null, 2),
               "utf8",
               err => {
                 fs.close(fd, err => {
@@ -68,17 +70,12 @@ var axiosBands = () => {
         .then(response => {
           fs.open("log.txt", "a", (err, fd) => {
             if (err) throw err;
-            fs.appendFile(
-              fd,
-              JSON.stringify(subinquiry + response, null, 2),
-              "utf8",
-              err => {
-                fs.close(fd, err => {
-                  if (err) throw err;
-                });
+            fs.appendFile(fd, subinquiry + "\n" + response, "utf8", err => {
+              fs.close(fd, err => {
                 if (err) throw err;
-              }
-            );
+              });
+              if (err) throw err;
+            });
           });
           for (var i = 0; i < response.data.length; i++) {
             console.log("Venue: " + response.data[i].venue.name);
@@ -120,7 +117,9 @@ var axiosOMDB = () => {
             if (err) throw err;
             fs.appendFile(
               fd,
-              JSON.stringify(subinquiry + response, null, 2),
+              JSON.stringify(subinquiry, null, 2) +
+                "\n" +
+                JSON.stringify(response, null, 2),
               "utf8",
               err => {
                 fs.close(fd, err => {
